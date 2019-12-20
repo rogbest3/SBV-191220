@@ -32,7 +32,7 @@ export default {
 		}
 	},
 	methods : {
-		login(){
+		login(){//
 			alert(`USERID : ${this.userid}, PASSWORD : ${this.passwd}`)
 			let url = `${this.context}/login`
 			let data = {
