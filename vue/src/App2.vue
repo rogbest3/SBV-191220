@@ -1,20 +1,18 @@
 <template>
   <div id="app">
-    <home/>
+    <home></home>
   </div>
 </template>
 
 <script>
-import Home from '@/components/Home.vue'
-
+import Home from "@/components/Home.vue"
 export default {
-  name: 'app',
-  components: {
+  name: 'App',
+  components : {
     Home
   }
-}
+};
 </script>
-
 <style scoped>
 
 </style>

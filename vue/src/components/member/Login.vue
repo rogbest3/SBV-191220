@@ -22,13 +22,16 @@
 
 <script>
 import axios from "axios"
+import {store} from "../../store"
 export default {
 	data(){
 		return {
 			context : 'http://localhost:8080/',
 			result : '',
 			userid : '',
-			passwd : ''
+			passwd : '',
+			loginedcId : '',
+			loginedPwd : ''
 		}
 	},
 	methods : {
@@ -40,14 +43,20 @@ export default {
 				passwd : this.passwd
 			}
 			let headers = {
-				'authorization': 'JWT fefege..',
+				'authorization': 'JWT fefege..',	// local이라 test용으로 사용됨
 				'Accept' : 'application/json',
 				'Content-Type': 'application/json' }
 			axios
 			.post(url, data, headers)
 			.then(res=>{
-				this.result = res.data
-				alert(`AXIOS 성공 - result : ${this.result.userid}`)
+				if(res.result === "SUCCESS"){
+					alert(`로그인 성공 - result : ${res.person.userid}`)
+					store.state.loginedcId = res.person.userid
+					alert(`스토어에 저장 성공 - ${store.state.loginedcId}`)
+				}else{
+					alert(`로그인 실패`)
+				}
+				
 			})
 			.catch(()=>{
 				alert('AXIOS 실패')

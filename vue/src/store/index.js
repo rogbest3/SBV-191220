@@ -6,12 +6,10 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-	id : '',
-	offerId : ''
-  },
-  mutations: {
-    increment (state) {
-      state.count++
-    }
+    loginedUId : '',
+    loginedPwd : '',
+    id : '',
+    name : '',
+    birthday : ''
   }
 })
