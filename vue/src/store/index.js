@@ -6,10 +6,17 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    loginedUId : '',
-    loginedPwd : '',
+    customer : {},
+    authCheck : false
+    /* loginedCemail : '',
+    loginedCpwd : '',
     id : '',
-    name : '',
-    birthday : ''
+    cname : '',
+    cphone : '',
+    sdate : '',
+    gender : '',
+    hak : '',
+    ban : '',
+    score : '' */
   }
 })

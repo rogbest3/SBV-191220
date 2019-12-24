@@ -13,7 +13,8 @@
 					</a>
 					<ul class="">
 						<li><router-link to="/cusinfo">내 계정 관리</router-link></li>
-						<li><router-link to="/login">로그아웃</router-link></li>
+						<li><a @click.prevent="logout">로그아웃</a></li>
+						<li><a @click.prevent="withdrawal">회원탈퇴</a></li>
 						<li class="mobile">
 							<div class="themoin-language-dropdown" tabindex="0">
 								<img class="ic-flag" src="https://img.themoin.com/public/img/ic-flag-ko.svg">
@@ -296,19 +297,19 @@
 									<h3>EUR</h3>
 								</div>
 							</div>
-							<button type="submit" class="index-send-btn moin-body" @click.prevent="alert1">송금하기</button>
+							<button type="submit" class="index-send-btn moin-body" @click.prevent="">송금하기</button>
 						</div>
 					</div>
 				</div>
 
 				<div class="user-remit-container">
 					<div class="user-title">
-						<h3>{{name}} 내 입금 계좌</h3>
+						<h3>{{cname}} 내 입금 계좌</h3>
 					</div>
 					<div class="user-account">
 						<p class="warning">
 							<span class="warning fs-block">반드시 인증받으신 기업은행 23210816702025 계좌에서 내 입금 계좌로 이체 해 주세요.</span><br>내 입금 계좌 : 
-							<span class="fs-block">광주은행 9427010261003 {{name}}_모인</span>
+							<span class="fs-block">광주은행 9427010261003 {{cname}}_모인</span>
 						</p>
 					</div>
 					<div class="user-title">
@@ -381,19 +382,44 @@
 </template>
 <script>
 import {store} from "../../store"
+import Axios from 'axios'
 export default{
+	
 	create(){	//	후크 메서드 - 자동 호출, getJSON 같은 것
 	
 	},
 	data(){
 		return{
-			name : store.state.name
+			cname : store.state.customer.cname,
+			context : 'http://localhost:8080/'
+			
 		}
 	},
 	methods : {
-		alert1(){
-			alert(this.name)
+		logout(){
+			store.state.customer.cemail = ''
+			store.state.customer.cpwd = ''
+			store.state.customer.cname = ''
+			store.state.customer.cphone = ''
+			store.state.customer.id = ''
+			store.state.authCheck = false
+			alert(`loginedCemail : ${store.state.customer.cemail}, loginedCpwd : ${store.state.customer.cpwd}`)
+			this.$router.push('/')
+		},
+		withdrawal(){	// 자바에 정보가 하나도 없기 때문에 정보를 전부 줘야함 -> POST 사용
+			alert('회원탈퇴')
+			
+			Axios
+			.delete(`${this.context}/withdrawal/${store.state.customer.cemail}`)
+			.then(()=>{
+				alert(`회원탈퇴 성공`)
+			})
+			.catch(()=>{
+				alert('AXIOS 실패')
+			})
+			
 		}
+		
 	}
 
 }

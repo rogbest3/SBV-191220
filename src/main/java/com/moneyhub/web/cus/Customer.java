@@ -1,10 +1,15 @@
 package com.moneyhub.web.cus;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
@@ -31,26 +36,36 @@ public class Customer {
 	
 	@Id
 	@GeneratedValue
-	@Column(name="CNO", nullable=false)
-	private String cno;
+	@Column(name="ID", nullable=false) 
+	private Long id;
 	@Column(name="CEMAIL", nullable=false)
 	private String cemail;
 	@Column(name="CPWD", nullable=false)
 	private String cpwd;
 	@Column(name="CNAME", nullable=false)
 	private String cname;
-	@Column(name="CNTCD", nullable=false)
+	@Column(name="CNTCD", nullable=true)
 	private String cntcd;
 	@Column(name="CPHONE", nullable=false)
 	private String cphone;
-	@Column(name="CSTCD", nullable=false)
+	@Column(name="CSTCD", nullable=true)
 	private String cstcd;
-	@Column(name="SDATE", nullable=false)
-	private String sdate;
-	@Column(name="WDATE", nullable=false)
+	@Temporal(TemporalType.DATE)
+	@Column(name="SDATE", nullable=true)
+	private Date sdate;
+	@Column(name="WDATE", nullable=true)
 	private String wdate;
-	@Column(name="UDATE", nullable=false)
+	@Column(name="UDATE", nullable=true)
 	private String udate;
+	
+	@Column(name="GENDER", nullable=true)
+	private String gender;
+	@Column(name="HAK", nullable=true)
+	private int hak;
+	@Column(name="BAN", nullable=true)
+	private int ban;
+	@Column(name="SCORE", nullable=true)
+	private int score;
 
 	
 }

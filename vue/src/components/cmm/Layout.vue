@@ -11,7 +11,6 @@
                <div>
                     <slot name="content" :title="contentTitle"></slot>
                </div>
-			
 		</section>
 		<footer>
 			<slot name="footer" :title="footerTitle"></slot>

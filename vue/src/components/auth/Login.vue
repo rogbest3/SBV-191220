@@ -14,14 +14,14 @@
 							<div class="moin-input-group">
 								<div class="moin-input">
 									<label style="color: rgb(116, 127, 155);">이메일 (Email)</label>
-									<input v-model="userid" class="fs-block" placeholder="youremail@email.com" type="text" tabindex="0" value="">
+									<input v-model="cemail" class="fs-block" placeholder="youremail@email.com" type="text" tabindex="0" value="">
 								</div>
 								<p class="moin-error"></p>
 							</div>
 							<div class="themoin-password-input moin-input-group password">
 								<div class="moin-input">
 									<label style="color: rgb(116, 127, 155);">비밀번호 (Password)</label>
-									<input v-model="passwd" class="fs-block" placeholder="비밀번호를 입력해주세요." type="password" tabindex="0" maxlength="20" value="">
+									<input v-model="cpwd" class="fs-block" placeholder="비밀번호를 입력해주세요." type="password" tabindex="0" maxlength="20" value="">
 								</div>
 								<p class="moin-error"></p>
 							</div>
@@ -85,9 +85,9 @@ export default{
 			is_show : false,
 			context : 'http://localhost:8080/',
 			result : '',
-			userid : '',
-			passwd : '',
-			person : {} 	
+			cemail : '',
+			cpwd : '',
+			customer : {} 	
 		}
 	},
 	methods : {
@@ -102,8 +102,8 @@ export default{
 			
 			let url = `${this.context}/login`
 			let data = {
-				userid : this.userid,
-				passwd : this.passwd
+				cemail : this.cemail,
+				cpwd : this.cpwd
 			}
 			let headers = {
 				'authorization': 'JWT fefege..',	// local이라 test용으로 사용됨
@@ -116,13 +116,10 @@ export default{
 				// alert(`${res.data.result}`)
 				if(res.data.result === "SUCCESS"){
 					// alert(`로그인 성공 - result : ${res.data.person.userid}`)
-					this.person = res.data.person
-					store.state.loginedUId = this.person.userid
-					store.state.loginedPasswd = this.person.passwd
-					store.state.name = this.person.name
-					store.state.birthday = this.person.birthday
-					store.state.id = this.person.id
-					// alert(`스토어에 저장 성공 - ${store.state.loginedUId}`)
+					store.state.customer = res.data.customer
+					store.state.authCheck = true
+					alert(`cemail : ${store.state.customer.cemail}, cpwd : ${store.state.customer.cpwd}`)
+
 					this.$router.push({path : '/main2'})
 				}else{
 					alert(`로그인 실패`)

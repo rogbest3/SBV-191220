@@ -63,11 +63,11 @@
 			<div class="themoin-mypage">
 				<div class="tab-container">
 					<div class="tab">
-						<a class="active">회원 정보</a>
-						<a class="">비밀번호 변경</a>
-						<a class="">인증관리</a>
-						<a class="">알림설정</a>
-						<a class="">추천인 관리</a>
+						<a class="active" @click.prevent="cusinfo_a">회원 정보</a>
+						<a class="" @click.prevent="pwdchg_a">비밀번호 변경</a>
+						<a class="" @click.prevent="authmgmt_a">인증관리</a>
+						<a class="" @click.prevent="alarm_a">알림설정</a>
+						<a class="" @click.prevent="refmgmt_a">추천인 관리</a>
 						<div class="spacer"></div>
 						<img src="https://img.themoin.com/public/img/img-man-s.svg">
 						<p>rogbest@naver.com</p>
@@ -81,14 +81,14 @@
 						<ol>
 							<li>
 								<p>ID</p>
-								<p class="fs-block">rogbest@naver.com</p>
+								<p class="fs-block">{{cemail}}</p>
 							</li>
 						</ol>
 						<div class="head">회원정보</div>
 						<ol>
 							<li>
 								<p>이름</p>
-								<p class="fs-block">Minkook Kim</p>
+								<p class="fs-block">{{cname}}</p>
 							</li>
 							<li>
 								<p>국가</p>
@@ -107,12 +107,32 @@
 								<p class="fs-block"></p>
 							</li>
 							<li>
+								<p>생년월일</p>
+								<p class="fs-block">{{sdate}}</p>
+							</li>
+							<li>
 								<p>휴대전화</p>
-								<p class="fs-block">01042234683</p>
+								<p class="fs-block">{{cphone}}</p>
+							</li>
+							<li>
+								<p>성별</p>
+								<p class="fs-block">{{gender}}</p>
+							</li>
+							<li>
+								<p>학년</p>
+								<p class="fs-block">{{hak}}</p>
+							</li>
+							<li>
+								<p>학번</p>
+								<p class="fs-block">{{ban}}</p>
+							</li>
+							<li>
+								<p>성적</p>
+								<p class="fs-block">{{score}}</p>
 							</li>
 						</ol>
 					</div><br>
-					<button class="next">정보수정하기</button><br><br>
+					<button @click.prevent="cusInfoChg_btn" class="next">정보수정하기</button><br><br>
 				</div>
 			</div>
 
@@ -171,9 +191,42 @@
 </template>
 
 <script>
-
+import {store} from "../../store"
 export default {
+	data(){
+		return {
+			cemail : store.state.customer.cemail,
+			cpwd : store.state.customer.cpwd,
+			cname : store.state.customer.cname,
+			cphone : store.state.customer.cphone,
+			gender : store.state.customer.gender,
+			hak : store.state.customer.hak,
+			ban : store.state.customer.ban,
+			score : store.state.customer.score,
+			sdate : store.state.customer.sdate
+		}
+	},
+	methods : {	// cusinfo_a, pwdchg_a, authmgmt_a, alarm_a, refmgmt_a
 
+		cusInfoChg_btn(){
+			this.$router.push('/cusinfochg')
+		},
+		cusinfo_a(){
+			this.$router.push('/cusinfo')
+		},
+		pwdchg_a(){
+			this.$router.push('/pwdchg')
+		},
+		authmgmt_a(){
+			this.$router.push('/authmgmt')
+		},
+		alarm_a(){
+			this.$router.push('/alarm')
+		},
+		refmgmt_a(){
+			this.$router.push('/refmgmt')
+		}
+	}
 }
 </script>
 

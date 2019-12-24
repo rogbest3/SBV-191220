@@ -24,24 +24,24 @@ public class PersonController {
 		all.forEach(p -> sb.append(p.getName() + " "));
 		return sb.toString();
 	}
-	@RequestMapping("/login")
-	public HashMap<String, Object> login(@RequestBody Person param) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		printer.accept("로그인 진입");
-		printer.accept(String.format("USERID : %s", param.getUserid()));
-		printer.accept(String.format("PASSWD : %s", param.getPasswd()));
-		person = personRepository.
-				findByUseridAndPasswd(param.getUserid(), param.getPasswd());
-		if(person != null) {
-			printer.accept("로그인 성공");
-			map.put("result", "SUCCESS");
-			map.put("person", person);
-			printer.accept(map.get("result"));
-		}else {
-			printer.accept("로그인 실패");
-			map.put("result", "FAIL");
-			map.put("person", person);
-		}
-		return map;
-	}
+//	@RequestMapping("/login")
+//	public HashMap<String, Object> login(@RequestBody Person param) {
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		printer.accept("로그인 진입");
+//		printer.accept(String.format("USERID : %s", param.getUserid()));
+//		printer.accept(String.format("PASSWD : %s", param.getPasswd()));
+//		person = personRepository.
+//				findByUseridAndPasswd(param.getUserid(), param.getPasswd());
+//		if(person != null) {
+//			printer.accept("로그인 성공");
+//			map.put("result", "SUCCESS");
+//			map.put("person", person);
+//			printer.accept(map.get("result"));
+//		}else {
+//			printer.accept("로그인 실패");
+//			map.put("result", "FAIL");
+//			map.put("person", person);
+//		}
+//		return map;
+//	}
 }

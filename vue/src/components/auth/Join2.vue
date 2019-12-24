@@ -436,7 +436,6 @@ export default{
 			axios
 			.post(url, data, headers)
 			.then(()=>{
-
 				this.$router.push('/login')	
 			})
 			.catch(()=>{
