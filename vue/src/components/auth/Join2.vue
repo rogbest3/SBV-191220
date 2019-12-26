@@ -440,6 +440,7 @@ export default{
 			})
 			.catch(()=>{
 				alert('AXIOS 실패')
+				this.$router.push('/join1')	
 			})
 			
 		}

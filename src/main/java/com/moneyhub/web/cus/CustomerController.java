@@ -1,16 +1,23 @@
 package com.moneyhub.web.cus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Stream;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.moneyhub.web.pxy.Proxy;
 import com.moneyhub.web.util.Printer;
 
 @RestController
@@ -20,16 +27,14 @@ public class CustomerController {
 	@Autowired private CustomerRepository customerRepository;
 	@Autowired private Customer customer;
 	@Autowired private Printer printer;
+	@Autowired private Proxy proxy;
+	@Autowired ModelMapper modelMapper;
+	@Bean public ModelMapper modelMapper() { return new ModelMapper(); }
 	
 	@RequestMapping("/join")
 	public void join (@RequestBody Customer param){
 		printer.accept("join 진입");
 
-//		customer.setCemail(param.getCemail());
-//		customer.setCpwd(param.getCpwd());
-//		customer.setCname(param.getCname());
-//		customer.setCphone(param.getCphone());
-//		
 		printer.accept(param.toString());
 		
 		customerRepository.save(param);
@@ -82,4 +87,52 @@ public class CustomerController {
 		
 		return map;
 	}
+	
+	@GetMapping("/students")
+	public Stream<CustomerDTO> studentsList(){
+		printer.accept("리스트 진입");
+//		Iterable<Person> entites = personRepository.findByRole("student");
+		Iterable<Customer> entities = customerRepository.findAll();
+		List<CustomerDTO> list = new ArrayList<>();
+		
+		for(Customer p : entities) {
+			CustomerDTO dto = modelMapper.map(p, CustomerDTO.class);
+			if(dto.getRole().equals("student"))
+				list.add(dto);
+		}
+				
+		return list.stream().filter(role-> role.getRole().equals("student"));
+	}
+	
+	@GetMapping("/hak/{number}")
+	public Stream<CustomerDTO> hakList(@PathVariable String number){
+		printer.accept("리스트 진입");
+//		Iterable<Person> entites = personRepository.findByRole("student");
+		Iterable<Customer> entities = customerRepository.findAll();
+		List<CustomerDTO> list = new ArrayList<>();
+		
+		for(Customer p : entities) {
+			CustomerDTO dto = modelMapper.map(p, CustomerDTO.class);
+			list.add(dto);
+		}
+				
+		return list.stream().filter(l-> l.getHak() == proxy.parseInt(number) );
+	}
+	@GetMapping("/ban/{number}")
+	public Stream<CustomerDTO> banList(@PathVariable String number){
+		printer.accept("리스트 진입");
+		//	Iterable<Person> entites = personRepository.findByRole("student");
+		Iterable<Customer> entities = customerRepository.findAll();
+		List<CustomerDTO> list = new ArrayList<>();
+
+		for(Customer p : entities) {
+			CustomerDTO dto = modelMapper.map(p, CustomerDTO.class);
+			list.add(dto);
+		}
+				
+		return list.stream().filter(role-> role.getBan() == proxy.parseInt(number));
+	}
+	
+	
+	
 }
