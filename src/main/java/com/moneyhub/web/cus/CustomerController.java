@@ -29,6 +29,8 @@ public class CustomerController {
 	@Autowired private Printer printer;
 	@Autowired private Proxy proxy;
 	@Autowired ModelMapper modelMapper;
+	@Autowired private CustomerService customerService;
+	
 	@Bean public ModelMapper modelMapper() { return new ModelMapper(); }
 	
 	@RequestMapping("/join")
@@ -104,11 +106,35 @@ public class CustomerController {
 		return list.stream().filter(role-> role.getRole().equals("student"));
 	}
 	
-	@GetMapping("/hak/{number}")
-	public Stream<CustomerDTO> hakList(@PathVariable String number){
-		printer.accept("리스트 진입");
+	@GetMapping("/students/{searchword}")
+	public Stream<CustomerDTO> findSome(@PathVariable String searchword){
+		printer.accept("검색 진입");
+		customerService.findByHak();
+		switch (searchword) {
+		case "namesOfStudents" : break;
+		case "streamToArray" : break;
+		case "streamToMap" : break;
+		case "theNumberOfStudents" : break;
+		case "totalScore" : break;
+		case "topStudent" : break;
+		case "getStat" : break;
+		case "nameList" : break;
+		case "partioningByGender" : break;
+		case "partioningCountPerGender" : break;
+		case "partioningTopPerGender" : break;
+		case "partioningRejectPerGender" : break;
+		case "findByHak" : break;
+		case "groupByGrade" : break;
+		case "personCountByLevel" : break;
+		case "multiGrouping" : break;
+		case "multiGroupingMax" : break;
+		case "multiGroupingGrade" : break;
+
+		default:
+			break;
+		}
 //		Iterable<Person> entites = personRepository.findByRole("student");
-		Iterable<Customer> entities = customerRepository.findAll();
+		Iterable<Customer> entities = customerRepository.findGroupByHak();
 		List<CustomerDTO> list = new ArrayList<>();
 		
 		for(Customer p : entities) {
@@ -116,7 +142,7 @@ public class CustomerController {
 			list.add(dto);
 		}
 				
-		return list.stream().filter(l-> l.getHak() == proxy.parseInt(number) );
+		return list.stream().filter(l-> l.getHak() == proxy.parseInt(searchword) );
 	}
 	@GetMapping("/ban/{number}")
 	public Stream<CustomerDTO> banList(@PathVariable String number){

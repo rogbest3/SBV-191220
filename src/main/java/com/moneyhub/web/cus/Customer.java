@@ -24,7 +24,6 @@ import lombok.Data;
 				columnNames={"CEMAIL"}	//	CEMAIL 유니크
 			)
 		})
-public class Customer {
 //	private String cno,
 //	cemail,
 //	cpwd,
@@ -40,6 +39,7 @@ public class Customer {
 	  CNO, CEMAIL, CPWD, CNAME, CNTCD, 
 	  CPHONE, CSTCD, SDATE, WDATE, UDATE;		*/
 	
+public class Customer implements Comparable<Customer>{	
 	@Id
 	@GeneratedValue
 	@Column(name="ID", nullable=false) 
@@ -64,8 +64,8 @@ public class Customer {
 	@Column(name="UDATE", nullable=true)
 	private String udate;
 	
-	@Column(name="GENDER", nullable=true)
-	private String gender;
+	@Column(name="MALE", nullable=true)
+	private boolean male;
 	@Column(name="HAK", nullable=true)
 	private int hak;
 	@Column(name="BAN", nullable=true)
@@ -75,5 +75,11 @@ public class Customer {
 	@Column(name="ROLE", nullable=true)
 	private String role;
 
+	enum Level{ HIGH, MID, LOW }
 	
+	@Override
+	public int compareTo(Customer o) {
+		return o.score - this.score;
+	}
 }
+

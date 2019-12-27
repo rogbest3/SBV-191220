@@ -103,21 +103,6 @@ export default {
 
 		adminChg_btn(){
 			this.$router.push('/adminchg')
-		},
-		cusinfo_a(){
-			this.$router.push('/cusinfo')
-		},
-		pwdchg_a(){
-			this.$router.push('/pwdchg')
-		},
-		authmgmt_a(){
-			this.$router.push('/authmgmt')
-		},
-		alarm_a(){
-			this.$router.push('/alarm')
-		},
-		refmgmt_a(){
-			this.$router.push('/refmgmt')
 		}
 	}
 }
