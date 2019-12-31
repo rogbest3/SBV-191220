@@ -25,7 +25,7 @@
 								</div>
 								<p class="moin-error"></p>
 							</div>
-							<button class="btn-submit" type="submit" @click.prevent="login_btn">로그인</button>
+							<button class="btn-submit" type="submit" @click.prevent="login_btn0">로그인</button>
 						</form>
 						<p style="margin: 30px auto;">
 							<a @click="pwd_rem">비밀번호를 잊어버리셨나요?</a>
@@ -77,65 +77,34 @@
 	</div>
 </template>
 <script>
-import axios from "axios"
-import {store} from "../../store"
-export default{
+
+import { mapMutations } from 'vuex'
+export default{ 
 	data(){
 		return {
 			is_show : false,
-			context : 'http://localhost:8080/',
+	//		context : 'http://localhost:8080/',
 			result : '',
 			cemail : '',
 			cpwd : '',
-			customer : {} 	
+			customer : {}
 		}
 	},
-	methods : {
+	methods : { // ... -> Spread 문법(Spread Syntax, ...)는 대상을 개별 요소로 분리한다. Spread 문법의 대상은 이터러블이어야 한다.
+		...mapMutations([
+			'increment' // this.increment()를 this.$store.commit('increment')에 매핑합니다.
+		]),
+		...mapMutations({
+			add: 'increment' // this.add()를 this.$store.commit('increment')에 매핑합니다.
+		}),
+		login_btn0(){
+			this.$store.dispatch('login_btn')
+		},
 		join2_btn(){
 			this.$router.push('/join2')
 		},
 		pwd_rem(){
 			this.is_show = !this.is_show
-		},
-		login_btn(){//
-			// alert(`USERID : ${this.userid}, PASSWORD : ${this.passwd}`)
-			
-			let url = `${this.context}/login`
-			let data = {
-				cemail : this.cemail,
-				cpwd : this.cpwd
-			}
-			let headers = {
-				'authorization': 'JWT fefege..',	// local이라 test용으로 사용됨
-				'Accept' : 'application/json',
-				'Content-Type': 'application/json' }
-			// let dest = ''
-			axios
-			.post(url, data, headers)
-			.then(res=>{	// res.data => d
-				// alert(`${res.data.result}`)
-				if(res.data.result === "SUCCESS"){
-					// alert(`로그인 성공 - result : ${res.data.person.userid}`)
-					store.state.customer = res.data.customer
-					store.state.authCheck = true
-					alert(`cemail : ${store.state.customer.cemail}, cpwd : ${store.state.customer.cpwd}`)
-					if(store.state.customer.role !== 'student'){
-						store.state.sidebar = 'managerSidebar'
-						this.$router.push({path : '/main2'})
-					}else{
-						store.state.sidebar = 'studentSidebar'
-						this.$router.push({path : '/main2'})
-					}
-				
-				}else{
-					alert(`로그인 실패`)
-					this.$router.push({path : '/login'})
-				}
-			})
-			.catch(()=>{
-				alert('AXIOS 실패')
-			})
-
 		}
 	}
 }

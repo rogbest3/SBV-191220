@@ -24,11 +24,11 @@ export default {
 		return {
 			active : '',
 			cemail : store.state.customer.cemail,
-			i : [ { isShow : false, aclick : 'admin_a', text : '관리자 변경' },
+/*			sidebar : [ { isShow : false, aclick : 'admin_a', text : '관리자 변경' },
 				{ isShow : false, aclick : 'admin_a', text : '비밀번호 변경' },
 				{ isShow : false, aclick : 'admin_a', text : '학생 목록' },
 				{ isShow : false, aclick : 'admin_a', text : '관리자 변경' },
-				{ isShow : false, aclick : 'admin_a', text : '관리자 변경' } ]
+				{ isShow : false, aclick : 'admin_a', text : '관리자 변경' } ] */
 		}
 	},
 	methods : {	// cusinfo_a, pwdchg_a, authmgmt_a, alarm_a, refmgmt_a

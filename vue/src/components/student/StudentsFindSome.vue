@@ -5,7 +5,7 @@
 				<h2 class="text-center">검색</h2>     
 				<a href="#">학년별 1등과 최하위 학생</a>  
 				<div class="form-group">
-					<input v-model="userid" type="text" class="form-control" placeholder="" required="required">
+					<input v-model="searchword" type="text" class="form-control" placeholder="" required="required">
 				</div>
 
 				<div class="form-group">
@@ -20,7 +20,7 @@
 			<a @click.prevent="topStudent">6. 1등 학생</a><br>
 			<a @click.prevent="getStat">7. 전체 학생 성적 통계</a><br>
 			<a @click.prevent="nameList">8. 전체 학생 이름</a><br>
-			<a @click.prevent="partioningBy">1.단순분할 (성별로 분할)</a><br>
+			<a @click.prevent="partioningByGender">1.단순분할 (성별로 분할)</a><br>
 			<a @click.prevent="partioningCountPerGender">2.단순분할 (성별 학생수)</a><br>
 			<a @click.prevent="partioningTopPerGender">3.단순분할 (성별 1등)</a><br>
 			<a @click.prevent="partioningRejectPerGender">4.다중분할 (성별 불합격자,  50점이하)</a><br>
@@ -30,6 +30,7 @@
 			<a @click.prevent="groupingByHakAndBan">4. 다중 그룹화 (학년별, 반별)</a><br>
 			<a @click.prevent="groupingTopByHakAndBan">5. 다중 그룹화 +통계 (학년별, 반별  1등)</a><br>
 			<a @click.prevent="groupingByStat">6. 다중그룹화 + 통계(학년별, 반별  성적그룹)</a>
+			<a @click.prevent="groupingByHak">7. 단순 그룹화(학별로 그룹화)</a><br>
 		</div>
 		<h3>학생 조건 검색 결과</h3>
 		<table class="table">
@@ -48,6 +49,7 @@
 			</tr>
 			<tr v-for="(j, i) of list" :key="j.id">
 				<td>{{i+1}}</td>
+				<td>{{j}}</td>
 				<td>{{j.cemail}}</td>
 				<td>{{j.cpwd}}</td>
 				<td>{{j.cname}}</td>
@@ -77,19 +79,24 @@ export default{
 	methods : {
 		search_btn(){
 		},
-		namesOfStudents(){
-			this.searchword = 'namesOfStudents'
+		axiosMethod(){
 			axios
+		//	.get(`${this.context}/students/${this.searchword}`)
 			.get(`${this.context}/students/${this.searchword}`)
 			.then(res =>{
-				this.list = res.data
+				this.list = res.data.list
 			})
 			.catch(e=>{
 				alert('AXIOS FAIL'+e)
 			})
 		},
+		namesOfStudents(){
+			this.searchword = 'namesOfStudents'
+			this.axiosMethod()
+		},
 		streamToArray(){
 			this.searchword = 'streamToArray'
+			this.axiosMethod()
 		},
 		streamToMap(){
 			
@@ -109,8 +116,29 @@ export default{
 		nameList(){
 			
 		},
-		partioningBy(){
-			
+		groupingByHak(){
+			alert(`검색어 : ${this.searchword}`)	// 1학년 학생 목록
+		//	this.searchword = 'partioningByGender'
+			axios
+			.get(`${this.context}/students/search/${this.searchword}`)
+			.then(res =>{
+				this.list = res.data.list
+			})
+			.catch(e=>{
+				alert('AXIOS FAIL'+e)
+			})
+		},
+		partioningByGender(){
+			alert(`검색어 : ${this.searchword}`)	// 남학생 목록
+		//	this.searchword = 'partioningByGender'
+			axios
+			.get(`${this.context}/students/search/${this.searchword}`)
+			.then(res =>{
+				this.list = res.data.list
+			})
+			.catch(e=>{
+				alert('AXIOS FAIL'+e)
+			})
 		},
 		partioningCountPerGender(){
 			

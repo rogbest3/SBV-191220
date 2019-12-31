@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.moneyhub.web.pxy.Box;
 import com.moneyhub.web.pxy.Proxy;
 import com.moneyhub.web.util.Printer;
 
@@ -28,6 +29,7 @@ public class CustomerController {
 	@Autowired private Customer customer;
 	@Autowired private Printer printer;
 	@Autowired private Proxy proxy;
+	@Autowired private Box<Object> box;
 	@Autowired ModelMapper modelMapper;
 	@Autowired private CustomerService customerService;
 	
@@ -91,14 +93,14 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/students")
-	public Stream<CustomerDTO> studentsList(){
+	public Stream<Customer> studentsList(){
 		printer.accept("리스트 진입");
 //		Iterable<Person> entites = personRepository.findByRole("student");
 		Iterable<Customer> entities = customerRepository.findAll();
-		List<CustomerDTO> list = new ArrayList<>();
+		List<Customer> list = new ArrayList<>();
 		
 		for(Customer p : entities) {
-			CustomerDTO dto = modelMapper.map(p, CustomerDTO.class);
+			Customer dto = modelMapper.map(p, Customer.class);
 			if(dto.getRole().equals("student"))
 				list.add(dto);
 		}
@@ -107,12 +109,18 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/students/{searchword}")
-	public Stream<CustomerDTO> findSome(@PathVariable String searchword){
+	public HashMap<?, ?> findSome(@PathVariable String searchword){
 		printer.accept("검색 진입");
 		customerService.findByHak();
 		switch (searchword) {
-		case "namesOfStudents" : break;
-		case "streamToArray" : break;
+		case "namesOfStudents" : 
+			box.put("list", customerService.namesOfStudents());
+			printer.accept(box.get().toString());
+			break;
+		case "streamToArray" :
+			box.put("list", customerService.streamToArray());
+			printer.accept(box.get().toString());
+			break;
 		case "streamToMap" : break;
 		case "theNumberOfStudents" : break;
 		case "totalScore" : break;
@@ -134,29 +142,93 @@ public class CustomerController {
 			break;
 		}
 //		Iterable<Person> entites = personRepository.findByRole("student");
-		Iterable<Customer> entities = customerRepository.findGroupByHak();
-		List<CustomerDTO> list = new ArrayList<>();
-		
-		for(Customer p : entities) {
-			CustomerDTO dto = modelMapper.map(p, CustomerDTO.class);
-			list.add(dto);
-		}
-				
-		return list.stream().filter(l-> l.getHak() == proxy.parseInt(searchword) );
+//		Iterable<Customer> entities = customerRepository.findGroupByHak();
+//		List<Customer> list = new ArrayList<>();
+//		for(Customer p : entities) {
+//			Customer dto = modelMapper.map(p, Customer.class);
+//			list.add(dto);
+//		}
+//		return list.stream().filter(l-> l.getHak() == proxy.parseInt(searchword) );
+		return box.get();
 	}
-	@GetMapping("/ban/{number}")
-	public Stream<CustomerDTO> banList(@PathVariable String number){
-		printer.accept("리스트 진입");
-		//	Iterable<Person> entites = personRepository.findByRole("student");
-		Iterable<Customer> entities = customerRepository.findAll();
-		List<CustomerDTO> list = new ArrayList<>();
 
-		for(Customer p : entities) {
-			CustomerDTO dto = modelMapper.map(p, CustomerDTO.class);
-			list.add(dto);
+	@GetMapping("/students/search/{searchword}")
+	public HashMap<?, ?> findSome1(@PathVariable String searchword){
+		printer.accept("검색1 진입");
+		String switchKey = "";
+		
+		switch (searchword) {
+			case "namesOfStudents" : 
+				break;
+			case "streamToArray" :
+				break;
+			case "streamToMap" : break;
+			case "theNumberOfStudents" : break;
+			case "totalScore" : break;
+			case "topStudent" : break;
+			case "getStat" : break;
+			case "nameList" : break;
+			case "남학생목록" : case "여학생목록" : 
+				switchKey = (searchword == "남") 
+							? "partioningByMale" 
+							: "partioningByFemale";
+				break;
+			case "partioningCountPerGender" : break;
+			case "partioningTopPerGender" : break;
+			case "partioningRejectPerGender" : break;
+			case "findByHak" : break;
+			case "groupByHak" : break;
+			case "groupByGrade" : break;
+			case "personCountByLevel" : break;
+			case "multiGrouping" : break;
+			case "multiGroupingMax" : break;
+			case "multiGroupingGrade" : break;
+	
+			default:
+				break;
 		}
+		
+		switch (switchKey) {
+			case "namesOfStudents" : break;
+			case "streamToArray" : break;
+			case "streamToMap" : break;
+			case "theNumberOfStudents" : break;
+			case "totalScore" : break;
+			case "topStudent" : break;
+			case "getStat" : break;
+			case "nameList" : break;
+			case "partioningByMale" : 
+			//	List<Customer> list = customerService.partioningByGender(true);
 				
-		return list.stream().filter(role-> role.getBan() == proxy.parseInt(number));
+				box.put("list", customerService.partioningByGender(true));
+				printer.accept(box.get().toString());
+				break;
+			case "partioningCountPerGender" : break;
+			case "partioningTopPerGender" : break;
+			case "partioningRejectPerGender" : break;
+			case "findByHak" : break;
+			case "groupByHak" :
+				Iterable<Customer> entities = customerRepository.findGroupByHak();
+				List<Customer> list = new ArrayList<>();
+				for(Customer p : entities) {
+					Customer dto = modelMapper.map(p, Customer.class);
+					list.add(dto);
+				}
+				break;
+			case "groupByGrade" : break;
+			case "personCountByLevel" : break;
+			case "multiGrouping" : break;
+			case "multiGroupingMax" : break;
+			case "multiGroupingGrade" : break;
+	
+			default:
+				break;
+		}
+
+//		return personDTOs.stream()
+//				.filter(role-> role.getRole().equals("student"));
+//		return list.stream().filter(l-> l.getHak() == proxy.parseInt(searchword) );
+		return box.get();
 	}
 	
 	

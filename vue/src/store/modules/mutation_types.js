@@ -1,0 +1,8 @@
+export const CUSTOMER = 'CUSTOMER'
+export const ERROR_STATE = 'ERROR_STATE'
+export const IS_AUTH = 'IS_AUTH'
+export const AUTHCHECK = 'AUTHCHECK'
+export const SIDEBAR = 'SIDEBAR'
+export const NAV = 'NAV'
+export const SHOWSIDEBAR = 'SHOWSIDEBAR'
+export const SIDEBARLIST = 'SIDEBARLIST'

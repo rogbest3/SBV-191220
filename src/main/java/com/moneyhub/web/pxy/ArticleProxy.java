@@ -18,7 +18,7 @@ import java.util.List;
 @Component("artProxy")
 public class ArticleProxy extends Proxy{
 
-	@Autowired Trunk<String> trunk;
+	@Autowired Inventory<String> inventory;
 	@Autowired Box<String> box;
 	
 	
@@ -36,7 +36,7 @@ public class ArticleProxy extends Proxy{
 		return "";
 	}
 	public Box<String> makeContent() {
-		trunk.put(Arrays.asList("site","srch"), Arrays.asList("직접입력", "송금"));
+	//	box.put(Arrays.asList("site","srch"), Arrays.asList("직접입력", "송금"));
 
 		return null;
 	}

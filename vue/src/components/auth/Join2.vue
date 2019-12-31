@@ -407,43 +407,19 @@ FAX: 0504-393-9687
 	</div>
 </template>
 <script>
-import axios from "axios"
+
 export default{
 	data(){
 		return{
-			context : 'http://localhost:8080/',
-			cemail : '',
+//			context : 'http://localhost:8080/',
+/* 			cemail : '',
 			cpwd : '',
 			cname : '',
-			cphone : ''
-
+			cphone : '' */
 		}
 	},
 	methods : {
-		join_btn(){
-			let url = `${this.context}/join`
-			let data = {
-				cemail : this.cemail,
-				cpwd : this.cpwd,
-				cname : this.cname,
-				cphone : this.cphone
-			}
-			let headers = {
-				'authorization' : 'JWT fefege..',
-				'Accept' : 'application/json',
-				'Content-Type' : 'application/json'
-			}
-			axios
-			.post(url, data, headers)
-			.then(()=>{
-				this.$router.push('/login')	
-			})
-			.catch(()=>{
-				alert('AXIOS 실패')
-				this.$router.push('/join1')	
-			})
-			
-		}
+		
 	}
 }
 </script>
