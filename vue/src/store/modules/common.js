@@ -1,20 +1,21 @@
 import * as types from "@/store/modules/mutation_types"
 
 const state = {
-	authCheck : false,
+/* 	isAuth : false,
     sidebar : 'preSidebar',
-    nav : 'nav',
-    showSidebar : false,
+	showSidebar : false, */
+	nav : 'nav',
     context : 'http://localhost:8080/',
 	errorState : '',
 	sidebarList : []
 }
 const getters = {
 	getErrorState :state =>state.getErrorState,
-	getAuthCheck : state => state.AuthCheck,
+	// getIsAuth : state => state.isAuth,
+	// getSidebar :state=> state.getSidebar,
+	// getShowSidebar : state=>state.ShowSidebar,
 	getContext : state => state.context,
-	getSidebar :state=> state.getSidebar,
-	getShowSidebar : state=>state.ShowSidebar,
+
 	getNav : state => state.getNav,
 	getSidebarList : state => state.getSidebarList
 }
@@ -23,29 +24,28 @@ const mutations = {
 	// [types.CUSTOMER] ( state, customer ){
 	// 	state.customer = customer
 	// },
-	[types.ERROR_STATE] ( state, error_state ){
-		state.error_state = error_state
+	[types.ERROR_STATE] ( state, errorState ){
+		state.errorState = errorState
 	},
-	[types.IS_AUTH] ( state, is_auth ){
-		state.is_auth = is_auth
-	},
-	[types.AUTHCHECK] ( state, authcheck ){
-		state.authcheck = authcheck
+/* 	[types.IS_AUTH] ( state, isAuth ){
+		state.isAuth = isAuth
 	},
 	[types.SIDEBAR] ( state, sidebar ){
 		state.sidebar = sidebar
 	},
-	[types.NAV] ( state, nav ){
-		state.nav = nav
-	},
 	[types.SHOWSIDEBAR] ( state, showsidebar ){
 		state.showsidebar = showsidebar
+	}, */
+	[types.NAV] ( state, nav ){
+		state.nav = nav
 	},
 	[types.SIDEBARLIST] ( state, sidebarlist ){
 		state.sidebarlist = sidebarlist
 	}
 }
 export default {
+	name : 'common',
+	namespaced : true,
 	state,
 	getters,
 	actions,

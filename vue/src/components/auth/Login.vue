@@ -10,7 +10,7 @@
 				<div>
 					<div class="moin-login">
 						<div class="newmoin-text-header">로그인</div>
-						<form class="login" method="post" action="/a/v1/member/login">
+						<form class="login" method="post" action="/a/v1/member/login" @submit.prevent="onSubmit(cemail, cpwd)">
 							<div class="moin-input-group">
 								<div class="moin-input">
 									<label style="color: rgb(116, 127, 155);">이메일 (Email)</label>
@@ -25,7 +25,7 @@
 								</div>
 								<p class="moin-error"></p>
 							</div>
-							<button class="btn-submit" type="submit" @click.prevent="login_btn0">로그인</button>
+							<button class="btn-submit" type="submit">로그인</button>
 						</form>
 						<p style="margin: 30px auto;">
 							<a @click="pwd_rem">비밀번호를 잊어버리셨나요?</a>
@@ -83,11 +83,13 @@ export default{
 	data(){
 		return {
 			is_show : false,
-	//		context : 'http://localhost:8080/',
+/* 			context : 'http://localhost:8080/',
 			result : '',
 			cemail : '',
 			cpwd : '',
-			customer : {}
+			customer : {} */
+			ctx : this.$store.state.common.context,
+			msg : ''
 		}
 	},
 	methods : { // ... -> Spread 문법(Spread Syntax, ...)는 대상을 개별 요소로 분리한다. Spread 문법의 대상은 이터러블이어야 한다.
@@ -97,8 +99,14 @@ export default{
 		...mapMutations({
 			add: 'increment' // this.add()를 this.$store.commit('increment')에 매핑합니다.
 		}),
-		login_btn0(){
-			this.$store.dispatch('login_btn')
+		onSubmit(cemail, cpwd){
+			//this.$store.dispatch('login_btn')
+			this.$store.dispatch('admin/login', {cemail:cemail, cpwd:cpwd, context: this.ctx})
+			.then(()=> this.redirect())
+			.catch(({message})=>this.msg = message)
+		},
+		redirect(){
+			this.$router.push(`/main2`)
 		},
 		join2_btn(){
 			this.$router.push('/join2')

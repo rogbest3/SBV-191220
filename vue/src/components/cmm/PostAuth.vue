@@ -36,10 +36,10 @@ export default{
 	
 	computed:{
 		sidebarCheck: function(){
-			return store.state.sidebar
+			return store.state.admin.sidebar
 		},
 		showSide(){
-			return store.state.showSidebar
+			return store.state.admin.showSidebar
 		}
 
 	}

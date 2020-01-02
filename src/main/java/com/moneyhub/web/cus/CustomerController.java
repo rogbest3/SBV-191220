@@ -1,8 +1,10 @@
 package com.moneyhub.web.cus;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.modelmapper.ModelMapper;
@@ -93,7 +95,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/students")
-	public Stream<Customer> studentsList(){
+	public List<Customer> studentsList(){
 		printer.accept("리스트 진입");
 //		Iterable<Person> entites = personRepository.findByRole("student");
 		Iterable<Customer> entities = customerRepository.findAll();
@@ -104,8 +106,10 @@ public class CustomerController {
 			if(dto.getRole().equals("student"))
 				list.add(dto);
 		}
-				
-		return list.stream().filter(role-> role.getRole().equals("student"));
+		list.stream().filter(role-> role.getRole().equals("student"));		
+		return list.stream()
+				.sorted(Comparator.comparing(Customer::getCustomerid)
+							.reversed()).collect(Collectors.toList());
 	}
 	
 	@GetMapping("/students/{searchword}")

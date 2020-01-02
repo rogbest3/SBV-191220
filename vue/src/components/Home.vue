@@ -12,7 +12,8 @@ export default{
     components : {PreAuth, PostAuth},
     computed:{
         loginCheck: function(){
-            return store.state.authCheck
+            // alert(`${store.state.admin.isAuth}`)
+            return store.state.admin.isAuth
         }
     }
 }

@@ -68,7 +68,7 @@ export default{
 	},
 	methods : {
 		mgmt_a(){
-			store.state.showSidebar = true
+			store.state.admin.showSidebar = true
 			this.$router.push('/cusinfo')
 		},
 		logout(){
