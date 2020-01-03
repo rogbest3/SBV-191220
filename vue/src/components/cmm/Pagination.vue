@@ -75,7 +75,7 @@ export default{
 				page += 1
 			return page
 		},
-		paginatedData(){
+		paginatedData (){
 			const start = this.pageNum * this.pageSize,
 					end = start + this.pageSize
 			return this.listArray.slice(start, end)

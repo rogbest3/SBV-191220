@@ -15,7 +15,6 @@ const getters = {
 	// getSidebar :state=> state.getSidebar,
 	// getShowSidebar : state=>state.ShowSidebar,
 	getContext : state => state.context,
-
 	getNav : state => state.getNav,
 	getSidebarList : state => state.getSidebarList
 }

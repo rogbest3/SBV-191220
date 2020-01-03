@@ -37,7 +37,7 @@ Vue.use(Router)
 
 export default new Router({
 	mode : 'history',
-	routes : [ { path : '/', name : 'mai1', component : Main1 },
+	routes : [ { path : '/', name : 'main1', component : Main1 },
 				{ path : '/admin', name : 'admin', component : Admin },
 				{ path : '/adminChg', name : 'adminChg', component : AdminChg },
 				{ path : '/nav', name : 'nav', component : Nav },
